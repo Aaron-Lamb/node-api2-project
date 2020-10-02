@@ -7,6 +7,7 @@ const port = 8080;
 
 server.use(express.json());
 server.use(welcomeRouter);
+server.use(expressRouter);
 
 server.listen(port, () => {
     console.log(`Server running on port ${port}`)
