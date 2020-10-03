@@ -98,4 +98,30 @@ router.post('/api/posts/:id/comments', (req, res) => {
     })
 })
 
+// PUT requests
+router.put('/api/posts/:id', (req, res) => {
+    if(!req.body.title || !req.body.contents) {
+        return res.status(404).json({
+            errorMessage: "Please provide title and contents for the post."
+        })
+    }
+
+    database.update(req.params.id, req.body)
+    .then(post => {
+        if(post) {
+            return res.status(200).json(post)
+        } else {
+            return res.status(400).json({
+                errorMessage: "Please provide title and contents for the post."
+            })
+        }
+    })
+    .catch(error => {
+        console.log(error)
+        return res.status(500).json({
+            error: "The post information could not be modified."
+        })
+    })
+})
+
 module.exports = router
