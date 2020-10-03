@@ -1,6 +1,6 @@
 const express = require('express');
 const database = require('../data/db');
-router = express.Router();
+const router = express.Router();
 
 // All GET requests
 router.get('/api/posts', (req, res) => {
@@ -50,6 +50,26 @@ router.get('/api/posts/:id/comments', (req, res) => {
         console.log(error)
         return res.status(500).json({
             error: "The comments information could not be retrieved."
+        })
+    })
+})
+
+// All POST requests
+router.post('/api/posts', (req, res) => {
+    if(!req.body.title || !req.body.contents) {
+        return res.status(400).json({
+            errorMessage: "Please provide title and contents for the post."
+        })
+    }
+    
+    database.insert(req.body)
+    .then(post => {
+        return res.status(201).json(post)
+    })
+    .catch(error => {
+        console.log(error)
+        return res.status(500).json({
+            error: "There was an error while saving the post to the database"
         })
     })
 })
