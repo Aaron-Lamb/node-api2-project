@@ -3,7 +3,7 @@ const expressRouter = require('./routers/express-router');
 const welcomeRouter = require('./routers/welcome-router');
 
 const server = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 server.use(express.json());
 server.use(welcomeRouter);
